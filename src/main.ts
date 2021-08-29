@@ -35,6 +35,8 @@ export function main () {
     return { domain: record.domain, result: new CheckSSL({domain: record.domain}).fetch().end };
   });
   whois.forEach(record => {
+    // まれに空のときがある模様・・。謎い
+    if (!record.result) return;
     let expirationDate:string = record.result.replace(/\s.*$/, '');
     const ymd:number[] = expirationDate.split(/[-\/]/).map(Number);
     ymd[1] = ymd[1] - 1;
